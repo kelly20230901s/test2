@@ -6,7 +6,7 @@ from prompts import journalist_prompt
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 st.set_page_config(page_title="교육 전문 기자 챗봇", layout="wide")
-st.title("📰 교육 전문 기자 챗봇 by 정연이")
+st.title("📰 교육 전문 기자 챗봇 by J")
 st.write("행사명과 개요를 입력하면 보도자료 형식의 기사를 생성해 드립니다.")
 
 # 사용자 입력
