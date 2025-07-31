@@ -1,12 +1,12 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 from prompts import journalist_prompt
 
-# OpenAI API 키 설정
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+# OpenAI 클라이언트 초기화
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 st.set_page_config(page_title="교육 전문 기자 챗봇", layout="wide")
-st.title("📰 교육 전문 기자 챗봇 by J")
+st.title("📰 교육 전문 기자 챗봇")
 st.write("행사명과 개요를 입력하면 보도자료 형식의 기사를 생성해 드립니다.")
 
 # 사용자 입력
@@ -17,8 +17,7 @@ generate_btn = st.button("📰 기사 생성")
 if generate_btn and event_name and event_description:
     with st.spinner("기사를 작성 중입니다..."):
 
-        # 프롬프트 조립
-        user_prompt = f"""
+        user_prompt = f""" 
 다음 내용을 바탕으로 보도자료 형식의 교육 기사로 작성해 주세요.
 
 행사명: {event_name}
@@ -32,9 +31,9 @@ if generate_btn and event_name and event_description:
 ---
 
 {journalist_prompt}
-"""
+""" 
 
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": "당신은 10년차 교육 전문 기자입니다."},
